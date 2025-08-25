@@ -4,6 +4,7 @@ import os
 
 app = Flask(__name__)
 
+# حتماً این متغیر محیطی روی Render ست شده باشه
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 if not BOT_TOKEN:
     raise ValueError("BOT_TOKEN is not set in environment variables.")
@@ -19,15 +20,12 @@ def webhook():
     message = data["message"]
     chat_id = message["chat"]["id"]
 
-    if "text" in message:
-        text = message["text"].strip()
-    else:
-        text = ""
+    text = message.get("text", "").strip()
 
-    # فقط در صورتی که /start باشه جواب بده
+    # فقط زمانی که کاربر /start زد جواب بده
     if text == "/start":
-    send_message(chat_id, "سلام 👋/nخوبی؟\nچخبر؟\nامیدوارم روزت عالی باشه!")
-   
+        send_message(chat_id, "سلام 👋 خوبی؟ چخبر؟")
+
     return "OK", 200
 
 def send_message(chat_id, text):
@@ -40,6 +38,7 @@ def send_message(chat_id, text):
     except Exception as e:
         print("خطا در ارسال پیام:", e)
 
+# مسیر Health Check
 @app.route("/ping", methods=["GET"])
 def ping():
     return "pong", 200
