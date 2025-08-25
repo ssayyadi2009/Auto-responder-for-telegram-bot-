@@ -26,8 +26,8 @@ def webhook():
 
     # فقط در صورتی که /start باشه جواب بده
     if text == "/start":
-        send_message(chat_id, "سلام 👋 خوبی؟ چخبر؟")
-
+    send_message(chat_id, "سلام 👋/nخوبی؟\nچخبر؟\nامیدوارم روزت عالی باشه!")
+   
     return "OK", 200
 
 def send_message(chat_id, text):
